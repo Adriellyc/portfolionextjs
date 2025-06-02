@@ -52,7 +52,7 @@ export default function Home() {
           <div className="flex-shrink-0">
             <Image
               className="rounded-full shadow-lg border-4 border-primary"
-              src="/perfil.jpeg"
+              src="/adrielly.jpeg"
               alt="Foto de Adrielly Campos Soares"
               width={250}
               height={250}
