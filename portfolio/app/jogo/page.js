@@ -65,17 +65,29 @@ export default function JogoDeAdivinhacao() {
   };
 
   return (
-    <div className="min-h-screen">
-      <header className="mt-6 sticky top-0 z-50 w-full bg-gradient-to-r from-purple-500 to-indigo-600 shadow">
+    <div className="min-h-screen bg-black text-gray-300">
+      <header className="mt-6 sticky top-0 z-50 w-full bg-gray-900 shadow">
         <nav className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex flex-wrap justify-between items-center text-base">
           <div className="font-bold text-white text-2xl">Adrielly Campos</div>
-          <ul className="flex gap-5 text-white font-semibold">
-            <li><Link href="/" className="hover:underline">Home</Link></li>
-            <li><Link href="/sobre" className="hover:underline">Sobre</Link></li>
-            <li><Link href="/academica" className="hover:underline">Acadêmico</Link></li>
-            <li><Link href="/profissional" className="hover:underline">Profissional</Link></li>
-            <li><Link href="/projetos" className="hover:underline">Projetos</Link></li>
-            <li><Link href="/jogo" className="hover:underline">Jogo</Link></li>
+          <ul className="flex gap-5 text-gray-300 font-semibold">
+            <li>
+              <Link href="/" className="hover:underline hover:text-indigo-400">Home</Link>
+            </li>
+            <li>
+              <Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link>
+            </li>
+            <li>
+              <Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmico</Link>
+            </li>
+            <li>
+              <Link href="/profissional" className="hover:underline hover:text-indigo-400">Profissional</Link>
+            </li>
+            <li>
+              <Link href="/projetos" className="hover:underline hover:text-indigo-400">Projetos</Link>
+            </li>
+            <li>
+              <Link href="/jogo" className="hover:underline hover:text-indigo-400">Jogo</Link>
+            </li>
           </ul>
         </nav>
       </header>
@@ -87,7 +99,7 @@ export default function JogoDeAdivinhacao() {
 
         <button
           onClick={() => alert(`Código: ${codigo}`)}
-          className="mb-4 px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded"
+          className="mb-4 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded text-gray-300"
         >
           Ver Código (debug)
         </button>
@@ -99,7 +111,7 @@ export default function JogoDeAdivinhacao() {
               value={entrada}
               onChange={(e) => setEntrada(e.target.value)}
               maxLength={4}
-              className="border border-gray-500 p-2 rounded w-full"
+              className="border border-gray-700 p-2 rounded w-full bg-gray-900 text-gray-300 placeholder-gray-500"
               placeholder="Ex: 1234"
             />
             <button
@@ -112,7 +124,7 @@ export default function JogoDeAdivinhacao() {
         )}
 
         {feedback && (
-          <div className="mb-4 text-center text-lg font-semibold text-green-600">
+          <div className="mb-4 text-center text-lg font-semibold text-green-500">
             {feedback}
           </div>
         )}
@@ -121,7 +133,7 @@ export default function JogoDeAdivinhacao() {
           <div className="text-center mb-6">
             <button
               onClick={reiniciar}
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
             >
               Jogar Novamente
             </button>
@@ -132,7 +144,7 @@ export default function JogoDeAdivinhacao() {
           {historico.map((item, index) => (
             <li
               key={index}
-              className="flex justify-between bg-gray-100 p-2 rounded"
+              className="flex justify-between bg-gray-900 p-2 rounded text-gray-300 border border-gray-700"
             >
               <span className="font-mono">{item.tentativa}</span>
               <span>{item.resultado}</span>
