@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
+
 export default function Projetos() {
   return (
     <div className="min-h-screen bg-black text-gray-300">
@@ -64,7 +65,7 @@ Foi uma experiência incrível, cheia de aprendizado, networking e muita inovaç
         <section className="bg-gray-900 p-6 rounded-lg shadow-md border border-gray-700 flex flex-col sm:flex-row gap-6">
           <div className="w-full sm:w-1/3">
             <Image
-              src="/projeto2.png"  // Troque pelo caminho real da sua imagem
+              src="/projeto.png"  
               alt="Projeto 2"
               width={400}
               height={300}
@@ -74,8 +75,11 @@ Foi uma experiência incrível, cheia de aprendizado, networking e muita inovaç
           <div className="flex-1">
             <h2 className="text-2xl font-semibold mb-3 text-white">Projeto 2</h2>
             <p>
-              Desenvolvimento de um dashboard interativo com Power BI para análise de dados acadêmicos. 
-              O projeto inclui integração com bases de dados e criação de visualizações intuitivas.
+              Neste projeto, desenvolvi um aplicativo voltado para combater a exclusão educacional que crianças em territórios periféricos enfrentam. O app tem como objetivo apoiar o processo de alfabetização e letramento de forma acessível e conectada com a realidade social e cultural dessas crianças.
+
+Sabemos que o modelo educacional tradicional muitas vezes não atende às necessidades específicas desses estudantes, o que gera desmotivação, baixo desempenho e evasão escolar. Pensando nisso, meu aplicativo oferece atividades educativas interativas e personalizadas, que valorizam a diversidade cultural e incentivam o aprendizado de forma prática e envolvente.
+
+
             </p>
           </div>
         </section>

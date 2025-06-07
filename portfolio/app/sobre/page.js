@@ -38,7 +38,6 @@ export default function SobreMim() {
           <ul className="list-disc list-inside space-y-1">
             <li>Desenvolvimento Web com React e Next.js</li>
             <li>Análise e Visualização de Dados com Python e Power BI</li>
-            <li>UX/UI Design e experiência do usuário</li>
             <li>Participação em projetos integradores e hackathons</li>
           </ul>
         </section>
