@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Conselho from "./components/Conselho";
-import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-gray-300">
@@ -11,6 +10,15 @@ export default function Home() {
             Adrielly Campos Soares
           </div>
           <ul className="flex flex-wrap gap-4 sm:gap-6 font-medium">
+<ul className="flex gap-5 text-gray-300 font-semibold">
+            <li><Link href="/" className="hover:underline hover:text-indigo-400">Home</Link></li>
+            <li><Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link></li>
+            <li><Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmica</Link></li>
+            <li><Link href="/profissional" className="hover:underline hover:text-indigo-400">Profissional</Link></li>
+            <li><Link href="/projetos" className="hover:underline hover:text-indigo-400">Projetos</Link></li>
+            <li><Link href="/jogo" className="hover:underline hover:text-indigo-400">Jogo</Link></li>
+          </ul>
+        
             {[
               { name: "Home", href: "/" },
               { name: "Sobre", href: "/sobre" },
