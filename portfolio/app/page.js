@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Conselho from "./components/Conselho";
 
-
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-black text-gray-300">
@@ -41,12 +40,6 @@ export default function Home() {
             </h1>
 
           
-
-            <p className="text-base sm:text-lg leading-relaxed text-gray-400">
-  Bem-vindo(a) ao meu portfólio! Sou estudante de Sistemas para Internet na UNICAP.  
-  Tenho habilidades em HTML, CSS, JavaScript, Python e SQL...
-</p>
-
 
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {[
