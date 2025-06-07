@@ -3,167 +3,144 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-function gerarSenha() {
-  const digitos = [];
-  while (digitos.length < 4) {
-    const d = Math.floor(Math.random() * 10).toString();
-    if (!digitos.includes(d)) digitos.push(d);
+function gerarCodigo() {
+  const numeros = [];
+  while (numeros.length < 4) {
+    const digito = Math.floor(Math.random() * 10).toString();
+    if (!numeros.includes(digito)) numeros.push(digito);
   }
-  return digitos.join("");
+  return numeros.join("");
 }
 
-function verificarTentativa(senha, tentativa) {
-  let touros = 0;
-  let vacas = 0;
+function avaliarPalpite(codigo, palpite) {
+  let certos = 0;
+  let foraDeLugar = 0;
 
   for (let i = 0; i < 4; i++) {
-    if (tentativa[i] === senha[i]) {
-      touros++;
-    } else if (senha.includes(tentativa[i])) {
-      vacas++;
+    if (palpite[i] === codigo[i]) {
+      certos++;
+    } else if (codigo.includes(palpite[i])) {
+      foraDeLugar++;
     }
   }
-  return `${touros} Touro(s), ${vacas} Vaca(s)`;
+  return `${certos} Certo(s), ${foraDeLugar} Fora do lugar`;
 }
 
-export default function JogoDaSenha() {
-  const [senha, setSenha] = useState(() => gerarSenha());
-  const [tentativa, setTentativa] = useState("");
-  const [tentativas, setTentativas] = useState([]);
-  const [fimDeJogo, setFimDeJogo] = useState(false);
-  const [mensagemFinal, setMensagemFinal] = useState("");
+export default function CodigoSecreto() {
+  const [codigo, setCodigo] = useState(() => gerarCodigo());
+  const [entrada, setEntrada] = useState("");
+  const [historico, setHistorico] = useState([]);
+  const [fim, setFim] = useState(false);
+  const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
-    if (tentativas.length >= 10 && !fimDeJogo) {
-      setFimDeJogo(true);
-      setMensagemFinal(`Fim de jogo! A senha era ${senha}`);
+    if (historico.length >= 10 && !fim) {
+      setFim(true);
+      setMensagem(`☠️ Fim de jogo! O código era ${codigo}`);
     }
-  }, [tentativas, senha, fimDeJogo]);
+  }, [historico, codigo, fim]);
 
-  function lidarComTentativa() {
-    if (tentativa.length !== 4 || new Set(tentativa).size !== 4 || !/^\d{4}$/.test(tentativa)) {
-      alert("Digite uma senha válida com 4 dígitos únicos.");
+  function tentarCodigo() {
+    if (entrada.length !== 4 || new Set(entrada).size !== 4 || !/^\d{4}$/.test(entrada)) {
+      alert("Digite 4 números únicos.");
       return;
     }
 
-    const resultado = verificarTentativa(senha, tentativa);
-    const novaEntrada = { valor: tentativa, resultado };
-    setTentativas((prev) => [novaEntrada, ...prev]);
-    setTentativa("");
+    const resultado = avaliarPalpite(codigo, entrada);
+    setHistorico((prev) => [{ valor: entrada, resultado }, ...prev]);
+    setEntrada("");
 
-    if (tentativa === senha) {
-      setFimDeJogo(true);
-      setMensagemFinal("Parabéns! Você acertou a senha!");
+    if (entrada === codigo) {
+      setFim(true);
+      setMensagem("🎉 Código descoberto com sucesso!");
     }
   }
 
-  function novoJogo() {
-    setSenha(gerarSenha());
-    setTentativa("");
-    setTentativas([]);
-    setFimDeJogo(false);
-    setMensagemFinal("");
+  function reiniciar() {
+    setCodigo(gerarCodigo());
+    setEntrada("");
+    setHistorico([]);
+    setFim(false);
+    setMensagem("");
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <header className="mt-8 sticky top-0 z-50 w-full bg-gradient-to-r from-sky-400 to-blue-600 shadow-md">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex flex-wrap items-center justify-center gap-4 sm:justify-between text-sm sm:text-base">
-          <div className="font-bold text-black text-xl tracking-wide">Maria Eduarda</div>
-          <ul className="flex flex-wrap gap-4 sm:gap-6 text-black font-medium">
-            <li><Link href="/" className="hover:underline hover:text-indigo-400">Home</Link></li>
+    <div className="min-h-screen bg-black text-white font-sans">
+      <header className="bg-[#0a2540] p-4 shadow-md sticky top-0 z-50">
+        <div className="max-w-5xl mx-auto flex justify-between items-center">
+          <h1 className="text-xl font-bold text-white tracking-wide">Código Secreto</h1>
+          <nav>
+            <ul className="flex gap-6 text-sm text-blue-200 font-medium">
+             <li><Link href="/" className="hover:underline hover:text-indigo-400">Home</Link></li>
             <li><Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link></li>
             <li><Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmica</Link></li>
             <li><Link href="/profissional" className="hover:underline hover:text-indigo-400">Profissional</Link></li>
             <li><Link href="/projetos" className="hover:underline hover:text-indigo-400">Projetos</Link></li>
             <li><Link href="/jogo" className="hover:underline hover:text-indigo-400">Jogo</Link></li>
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </div>
       </header>
 
-      <div className="p-6 sm:p-20 font-sans max-w-xl mx-auto">
-        <h1 className="text-3xl sm:text-5xl font-bold text-left text-blue-600 mb-4">
-          Jogo da Senha
-        </h1>
+      <main className="flex flex-col items-center justify-center p-6 text-center">
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-blue-400 mb-6">Descubra o Código</h2>
 
-        <div className="bg-gray-100 text-black rounded p-4 mb-6 text-sm sm:text-base leading-relaxed shadow">
-          <p className="font-semibold mb-2">Como jogar:</p>
-          <ul className="list-disc list-inside space-y-1">
-            <li>O objetivo é adivinhar a senha de 4 dígitos únicos.</li>
-            <li>A cada tentativa, você receberá dicas:</li>
-            <li><strong>1 Touro</strong>: dígito certo no lugar certo.</li>
-            <li><strong>1 Vaca</strong>: dígito certo no lugar errado.</li>
-            <li>Você tem no máximo 10 tentativas.</li>
-            <li>Boa sorte!</li>
-          </ul>
-        </div>
+        <p className="mb-4 text-blue-200 max-w-md">
+          Tente adivinhar o código secreto de 4 dígitos únicos. Cada tentativa revela:
+        </p>
 
-        <button
-          onClick={() => alert(`Senha atual: ${senha}`)}
-          className="mb-6 flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-.443 1.358-1.203 2.591-2.204 3.58" />
-          </svg>
-          Mostrar Senha (debug)
-        </button>
+        <ul className="mb-8 text-sm text-blue-300 space-y-1">
+          <li> <strong>Certo</strong>: número e posição corretos</li>
+          <li> <strong>Fora do lugar</strong>: número correto na posição errada</li>
+          <li> 10 tentativas no total</li>
+        </ul>
 
-        {!fimDeJogo && (
-          <div className="flex gap-2 mb-6">
+        {!fim && (
+          <div className="flex gap-2 mb-6 w-full max-w-md">
             <input
               type="text"
-              value={tentativa}
+              value={entrada}
               onChange={(e) => {
-                const val = e.target.value;
-                if (/^\d*$/.test(val)) {
-                  setTentativa(val);
-                }
+                const v = e.target.value;
+                if (/^\d*$/.test(v)) setEntrada(v);
               }}
               maxLength={4}
-              className="border border-gray-400 p-2 rounded w-full font-mono text-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
-              placeholder="Digite 4 dígitos únicos"
-              disabled={fimDeJogo}
+              placeholder="Ex: 1234"
+              className="flex-1 p-3 rounded bg-gray-900 border border-gray-600 text-lg tracking-widest text-center focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
-              onClick={lidarComTentativa}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              disabled={fimDeJogo}
+              onClick={tentarCodigo}
+              className="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded text-white transition"
             >
-              Tentar
+              Testar
             </button>
           </div>
         )}
 
-        {mensagemFinal && (
-          <div className={`mb-4 text-center font-medium text-lg ${fimDeJogo ? "text-green-500" : "text-red-500"}`}>
-            {mensagemFinal}
-          </div>
+        {mensagem && (
+          <p className={`mb-6 text-lg font-semibold ${fim ? "text-green-400" : "text-red-400"}`}>
+            {mensagem}
+          </p>
         )}
 
-        {fimDeJogo && (
-          <div className="text-center mb-6">
-            <button
-              onClick={novoJogo}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-            >
-              Novo Jogo
-            </button>
-          </div>
+        {fim && (
+          <button
+            onClick={reiniciar}
+            className="bg-green-600 hover:bg-green-500 px-5 py-2 rounded text-white mb-6"
+          >
+            Jogar Novamente
+          </button>
         )}
 
-        <ul className="space-y-2">
-          {tentativas.map((t, i) => (
-            <li
-              key={i}
-              className="flex justify-between items-center bg-gray-100 text-black p-3 rounded shadow-sm"
-            >
-              <span className="font-mono text-lg">{t.valor}</span>
-              <span className="text-gray-700">{t.resultado}</span>
+        <ul className="w-full max-w-md space-y-2">
+          {historico.map((h, i) => (
+            <li key={i} className="flex justify-between bg-[#111827] px-4 py-2 rounded text-blue-200 border border-gray-700 shadow-sm">
+              <span className="font-mono">{h.valor}</span>
+              <span className="text-sm">{h.resultado}</span>
             </li>
           ))}
         </ul>
-      </div>
+      </main>
     </div>
   );
 }
