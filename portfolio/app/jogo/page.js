@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-function criarCodigoSecreto() {
+function criarCodigo() {
   const numeros = [];
   while (numeros.length < 4) {
     const n = Math.floor(Math.random() * 10).toString();
@@ -12,128 +12,126 @@ function criarCodigoSecreto() {
   return numeros.join("");
 }
 
-function analisarPalpite(codigo, palpite) {
-  let acertos = 0;
-  let semiAcertos = 0;
+function avaliarChute(codigoSecreto, chute) {
+  let acertosExatos = 0;
+  let acertosTroca = 0;
 
   for (let i = 0; i < 4; i++) {
-    if (palpite[i] === codigo[i]) {
-      acertos++;
-    } else if (codigo.includes(palpite[i])) {
-      semiAcertos++;
+    if (chute[i] === codigoSecreto[i]) {
+      acertosExatos++;
+    } else if (codigoSecreto.includes(chute[i])) {
+      acertosTroca++;
     }
   }
-  return `${acertos} Acertos, ${semiAcertos} Semi-acertos`;
+  return `${acertosExatos} Exato(s), ${acertosTroca} Troca(s)`;
 }
 
-export default function JogoDeAdivinhacao() {
-  const [codigo, setCodigo] = useState(criarCodigoSecreto);
-  const [entrada, setEntrada] = useState("");
+export default function SenhaGame() {
+  const [codigoSecreto, setCodigoSecreto] = useState(() => criarCodigo());
+  const [chute, setChute] = useState("");
   const [historico, setHistorico] = useState([]);
-  const [encerrado, setEncerrado] = useState(false);
-  const [feedback, setFeedback] = useState("");
+  const [jogoFinalizado, setJogoFinalizado] = useState(false);
+  const [mensagem, setMensagem] = useState("");
 
   useEffect(() => {
-    if (historico.length >= 10 && !encerrado) {
-      setEncerrado(true);
-      setFeedback(`Você perdeu! O código era: ${codigo}`);
+    if (historico.length >= 10 && !jogoFinalizado) {
+      setJogoFinalizado(true);
+      setMensagem(`Acabou o jogo! O código era ${codigoSecreto}`);
     }
-  }, [historico, codigo, encerrado]);
+  }, [historico, codigoSecreto, jogoFinalizado]);
 
-  const processarPalpite = () => {
-    if (entrada.length !== 4 || new Set(entrada).size !== 4 || !/^\d{4}$/.test(entrada)) {
-      alert("Informe 4 dígitos únicos.");
+  function tentarChutar() {
+    if (chute.length !== 4 || new Set(chute).size !== 4 || !/^\d{4}$/.test(chute)) {
+      alert("Por favor, insira 4 números diferentes.");
       return;
     }
 
-    const resultado = analisarPalpite(codigo, entrada);
-    setHistorico([{ tentativa: entrada, resultado }, ...historico]);
-    setEntrada("");
+    const resultado = avaliarChute(codigoSecreto, chute);
+    setHistorico((antigo) => [{ tentativa: chute, feedback: resultado }, ...antigo]);
 
-    if (entrada === codigo) {
-      setEncerrado(true);
-      setFeedback("Parabéns! Você acertou!");
+    if (chute === codigoSecreto) {
+      setJogoFinalizado(true);
+      setMensagem("Você acertou! Parabéns!");
     }
-  };
 
-  const reiniciar = () => {
-    setCodigo(criarCodigoSecreto());
-    setEntrada("");
+    setChute("");
+  }
+
+  function reiniciarJogo() {
+    setCodigoSecreto(criarCodigo());
+    setChute("");
     setHistorico([]);
-    setEncerrado(false);
-    setFeedback("");
-  };
+    setJogoFinalizado(false);
+    setMensagem("");
+  }
 
   return (
-    <div className="min-h-screen bg-black text-gray-300">
-      <header className="mt-6 sticky top-0 z-50 w-full bg-gray-900 shadow">
-        <nav className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex flex-wrap justify-between items-center text-base">
-          <div className="font-bold text-white text-2xl">Adrielly Campos</div>
-          <ul className="flex gap-5 text-gray-300 font-semibold">
-            <li>
-              <Link href="/" className="hover:underline hover:text-indigo-400">Home</Link>
-            </li>
-            <li>
-              <Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link>
-            </li>
-            <li>
-              <Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmico</Link>
-            </li>
-            <li>
-              <Link href="/profissional" className="hover:underline hover:text-indigo-400">Profissional</Link>
-            </li>
-            <li>
-              <Link href="/projetos" className="hover:underline hover:text-indigo-400">Projetos</Link>
-            </li>
-            <li>
-              <Link href="/jogo" className="hover:underline hover:text-indigo-400">Jogo</Link>
-            </li>
+    <div className="min-h-screen bg-gray-900 text-white">
+      <header className="mt-8 sticky top-0 z-50 w-full bg-gradient-to-r from-purple-600 to-pink-500 shadow-md">
+        <nav className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between text-base">
+          <div className="font-bold text-white text-xl tracking-wide">Maria Eduarda</div>
+          <ul className="flex flex-wrap gap-5 text-white font-semibold">
+            <li><Link href="/" className="hover:underline hover:text-indigo-400">Home</Link></li>
+            <li><Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link></li>
+            <li><Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmica</Link></li>
+            <li><Link href="/profissional" className="hover:underline hover:text-indigo-400">Profissional</Link></li>
+            <li><Link href="/projetos" className="hover:underline hover:text-indigo-400">Projetos</Link></li>
+            <li><Link href="/jogo" className="hover:underline hover:text-indigo-400">Jogo</Link></li>
           </ul>
         </nav>
       </header>
 
-      <main className="p-8 sm:p-16 max-w-lg mx-auto font-sans">
-        <h1 className="text-4xl font-extrabold text-indigo-600 text-center mb-8">
-          Desafio Numérico
-        </h1>
+      <main className="max-w-lg mx-auto p-8">
+        <h1 className="text-4xl font-extrabold text-pink-400 mb-6">Desafio do Código</h1>
 
-        <button
-          onClick={() => alert(`Código: ${codigo}`)}
-          className="mb-4 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded text-gray-300"
-        >
-          Ver Código (debug)
-        </button>
+        <section className="bg-white text-gray-900 rounded-md p-5 mb-8 shadow">
+          <h2 className="font-bold mb-3">Instruções</h2>
+          <ul className="list-disc pl-5 space-y-1 text-sm">
+            <li>Descubra o código secreto de 4 dígitos distintos.</li>
+            <li>Para cada chute, receberá dicas:</li>
+            <li><strong>Exatos</strong>: números corretos na posição correta.</li>
+            <li><strong>Trocas</strong>: números certos na posição errada.</li>
+            <li>Tem até 10 tentativas.</li>
+          </ul>
+        </section>
 
-        {!encerrado && (
+        {!jogoFinalizado && (
           <div className="flex gap-3 mb-6">
             <input
               type="text"
-              value={entrada}
-              onChange={(e) => setEntrada(e.target.value)}
+              inputMode="numeric"
+              pattern="\d*"
               maxLength={4}
-              className="border border-gray-700 p-2 rounded w-full bg-gray-900 text-gray-300 placeholder-gray-500"
-              placeholder="Ex: 1234"
+              className="flex-1 border border-gray-400 rounded px-3 py-2 font-mono text-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
+              placeholder="Digite 4 dígitos únicos"
+              value={chute}
+              onChange={(e) => {
+                const valor = e.target.value;
+                if (/^\d*$/.test(valor)) setChute(valor);
+              }}
+              disabled={jogoFinalizado}
             />
             <button
-              onClick={processarPalpite}
-              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+              onClick={tentarChutar}
+              className="bg-pink-500 hover:bg-pink-600 rounded px-4 py-2 font-semibold transition"
+              disabled={jogoFinalizado}
             >
-              Enviar
+              Chutar
             </button>
           </div>
         )}
 
-        {feedback && (
-          <div className="mb-4 text-center text-lg font-semibold text-green-500">
-            {feedback}
+        {mensagem && (
+          <div className={`text-center mb-5 font-semibold text-lg ${jogoFinalizado ? "text-green-400" : "text-red-400"}`}>
+            {mensagem}
           </div>
         )}
 
-        {encerrado && (
-          <div className="text-center mb-6">
+        {jogoFinalizado && (
+          <div className="text-center mb-8">
             <button
-              onClick={reiniciar}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              onClick={reiniciarJogo}
+              className="bg-green-500 hover:bg-green-600 rounded px-5 py-2 font-semibold transition"
             >
               Jogar Novamente
             </button>
@@ -141,13 +139,10 @@ export default function JogoDeAdivinhacao() {
         )}
 
         <ul className="space-y-2">
-          {historico.map((item, index) => (
-            <li
-              key={index}
-              className="flex justify-between bg-gray-900 p-2 rounded text-gray-300 border border-gray-700"
-            >
-              <span className="font-mono">{item.tentativa}</span>
-              <span>{item.resultado}</span>
+          {historico.map(({ tentativa, feedback }, idx) => (
+            <li key={idx} className="flex justify-between bg-white text-gray-900 rounded px-4 py-2 shadow-sm font-mono">
+              <span>{tentativa}</span>
+              <span>{feedback}</span>
             </li>
           ))}
         </ul>
