@@ -42,9 +42,8 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
               {[
-                { name: "GitHub", url: "https://github.com/seu-usuario" },
-                { name: "LinkedIn", url: "https://linkedin.com/in/seu-perfil" },
-                { name: "Outro", url: "https://seulinkextra.com" },
+                { name: "GitHub", url: "https://github.com/Adriellyc" },
+                { name: "LinkedIn", url: "https://www.linkedin.com/in/adrielly-campos-a67aa4264?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
               ].map(({ name, url }) => (
                 <a
                   key={name}

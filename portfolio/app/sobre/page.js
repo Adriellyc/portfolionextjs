@@ -8,7 +8,7 @@ export default function SobreMim() {
       <header className="mt-6 sticky top-0 z-50 w-full bg-gray-900 shadow">
         <nav className="max-w-6xl mx-auto px-4 sm:px-8 py-4 flex flex-wrap justify-between items-center text-base">
           <div className="font-bold text-white text-2xl">Adrielly Campos</div>
-          <ul className="flex gap-5 text-gray-300 font-semibold">
+          <ul className="flex gap-6 text-sm  text-white-200 font-medium">
             <li><Link href="/" className="hover:underline hover:text-indigo-400">Home</Link></li>
             <li><Link href="/sobre" className="hover:underline hover:text-indigo-400">Sobre</Link></li>
             <li><Link href="/academica" className="hover:underline hover:text-indigo-400">Acadêmica</Link></li>

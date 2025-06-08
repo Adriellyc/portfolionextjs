@@ -6,7 +6,7 @@ export default function ExperienciaProfissional() {
       <header className="mt-8 sticky top-0 z-50 w-full bg-gray-900 shadow-md">
         <nav className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex flex-wrap items-center justify-center gap-4 sm:justify-between text-sm sm:text-base">
           <div className="font-bold text-white text-xl tracking-wide">Adrielly Campos Soares</div>
-          <ul className="flex flex-wrap gap-4 sm:gap-6 font-medium">
+          <ul className="flex gap-6 text-sm  text-white-200 font-medium">
             <li><Link href="/" className="hover:underline hover:text-blue-400 transition-colors">Home</Link></li>
             <li><Link href="/sobre" className="hover:underline hover:text-blue-400 transition-colors">Sobre</Link></li>
             <li><Link href="/academica" className="hover:underline hover:text-blue-400 transition-colors">Acadêmica</Link></li>
