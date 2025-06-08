@@ -20,7 +20,7 @@ export default function SobreMim() {
       </header>
 
       <main className="p-8 sm:p-16 max-w-4xl mx-auto font-sans space-y-8">
-        <h1 className="text-4xl font-extrabold text-indigo-600 text-center mb-8">
+        <h1 className="text-4xl font-extrabold text-indigo-600 text-white mb-8">
           Sobre Mim
         </h1>
 
